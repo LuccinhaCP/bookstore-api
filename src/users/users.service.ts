@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { hash } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create.user.dto';
 import { LoginUserDto } from './dto/login.dto';
@@ -17,13 +17,20 @@ export class UsersService {
     });
   }
 
-  async findByEmail({ email, password }: LoginUserDto): Promise<any> {
+  async findLogin({ email, password }: LoginUserDto): Promise<any> {
     const user = await this.prisma.user.findFirst({
       where: { email },
     });
-
     if (!user) {
-      throw new HttpException('invalid_credentials', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('no_user', HttpStatus.UNAUTHORIZED);
     }
+    const isPWvalid = await compare(password, user.password);
+
+    if (!isPWvalid) {
+      throw new HttpException('login_error', HttpStatus.UNAUTHORIZED);
+    }
+
+    const { password: p, ...data } = user;
+    return data;
   }
 }
