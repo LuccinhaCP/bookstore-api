@@ -8,7 +8,7 @@ import { LoginUserDto } from './dto/login.dto';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async create(userDto: CreateUserDto): Promise<any> {
+  async createUser(userDto: CreateUserDto): Promise<any> {
     return await this.prisma.user.create({
       data: {
         ...userDto,
@@ -17,20 +17,28 @@ export class UsersService {
     });
   }
 
-  async findLogin({ email, password }: LoginUserDto): Promise<any> {
+  async findByEmail({ email }) {
     const user = await this.prisma.user.findFirst({
       where: { email },
     });
-    if (!user) {
-      throw new HttpException('no_user', HttpStatus.UNAUTHORIZED);
-    }
-    const isPWvalid = await compare(password, user.password);
+    return user;
+  }
+  
+  async getAllUsers() {
+    return await this.prisma.user.findMany();
+  }
 
-    if (!isPWvalid) {
-      throw new HttpException('login_error', HttpStatus.UNAUTHORIZED);
-    }
+  async findByPayload({ email }: any): Promise<any> {
+    return await this.prisma.user.findFirst({
+      where: { email },
+    });
+  }
 
-    const { password: p, ...data } = user;
-    return data;
+  async remove(id: number) {
+    return this.prisma.user.delete({ where: { id } });
+  }
+  
+  async validatePW(password: string, hash: string): Promise<boolean> {
+    return compare(password, hash);
   }
 }
