@@ -13,7 +13,6 @@ export class AuthService {
     private prismaService: PrismaService,
     private usersService: UsersService,
     private jwtService: JwtService,
-    private UserEntity: UserEntity,
   ) {}
 
   async register(createUserDto: CreateUserDto): Promise<any> {
