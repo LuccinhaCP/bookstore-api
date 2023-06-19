@@ -1,3 +1,6 @@
+## Logotipo
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -68,6 +71,11 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 - Website - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
+## Amor secreto 
+````
+Eu, Sarah Cerqueira, sou perdidamente apaixonda por Lucca, não sei o que seria da minha vida sem ele, sinto tanto a falta dele. O que acontece, é que, tem um vazio dentro
+de mim que só ele pode preencher. Me nota crush. @LuccinhaCP.
+````
 ## License
 
 Nest is [MIT licensed](LICENSE).
